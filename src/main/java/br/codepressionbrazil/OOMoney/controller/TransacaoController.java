@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.annotation.Target;
@@ -23,31 +22,43 @@ public class TransacaoController {
     @Autowired
     private TransacaoService transacaoService;
 
+    @GetMapping
     public ResponseEntity<List<Transacao>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(transacaoService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findById(@PathVariable(name = "id") Integer id) {
+        if (!transacaoService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma transação com o ID informado");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(transacaoService.findById(id));
+    }
+
+    @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid TransacaoDTO transacaoDTO) {
-        if (transacaoService.existsById(transacaoDTO.getCpf())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Este CPF já está cadastrado!");
-        }
-        if (transacaoDTO.existsByEmail(transacaoDTO.getEmail())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Este E-mail já está cadastrado!");
-        }
         Transacao transacao = new Transacao();
         BeanUtils.copyProperties(transacaoDTO, transacao);
         return ResponseEntity.status(HttpStatus.OK).body(transacaoService.save(transacao));
     }
 
-    public Optional<Transacao> findById(Integer integer) {
-        return transacaoService.findById(integer);
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> edit(@RequestBody @Valid TransacaoDTO transacaoDTO, @PathVariable(name = "id") Integer id) {
+        if (!transacaoService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma peça com o ID informado");
+        }
+        Transacao transacao = transacaoService.findById(id).get();
+        BeanUtils.copyProperties(transacaoDTO, transacao);
+        transacao.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(transacaoService.save(transacao));
     }
 
-    public boolean existsById(Integer integer) {
-        return transacaoService.existsById(integer);
-    }
-
-    public void deleteById(Integer integer) {
-        transacaoService.deleteById(integer);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable(name = "id") Integer id) {
+        if (!transacaoService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma transação com o ID informado");
+        }
+        transacaoService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Transação deletada com sucesso");
     }
 }
