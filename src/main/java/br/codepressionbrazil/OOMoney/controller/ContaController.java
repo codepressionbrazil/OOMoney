@@ -27,7 +27,7 @@ public class ContaController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> registerConta(@RequestBody @Valid ContaDTO contaDto){
+    public ResponseEntity<Object> save(@RequestBody @Valid ContaDTO contaDto){
 
         Optional<Conta> optionalConta = contaService.findById(contaDto.getIdConta());
 
