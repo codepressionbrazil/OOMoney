@@ -16,8 +16,8 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping("/oomoney/pessoa")
-public class PessoController {
+@RequestMapping("/oomoney/pessoas")
+public class PessoaController {
 
     private PessoaService pessoaService;
 
