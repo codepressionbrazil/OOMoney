@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContaService {
@@ -16,5 +17,13 @@ public class ContaService {
 
     public List<Conta> getAllContas() {
         return contaRepository.findAll();
+    }
+
+    public Optional<Conta> findById(Long aLong) {
+        return contaRepository.findById(aLong);
+    }
+
+    public <S extends Conta> S save(S entity) {
+        return contaRepository.save(entity);
     }
 }
