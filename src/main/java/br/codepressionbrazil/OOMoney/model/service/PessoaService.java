@@ -2,16 +2,16 @@ package br.codepressionbrazil.OOMoney.model.service;
 
 import br.codepressionbrazil.OOMoney.model.entities.Pessoa;
 import br.codepressionbrazil.OOMoney.repository.PessoaRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
 @Service
 public class PessoaService {
 
+    @Autowired
     private PessoaRepository pessoaRepository;
 
     public List<Pessoa> findAll() {
