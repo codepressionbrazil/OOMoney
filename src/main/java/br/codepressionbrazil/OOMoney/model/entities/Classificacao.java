@@ -14,7 +14,7 @@ public class Classificacao {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true)
-    private Integer idClassificacao;
+    private Long idClassificacao;
 
     @Column(nullable = false)
     private String nomeClassificao;
