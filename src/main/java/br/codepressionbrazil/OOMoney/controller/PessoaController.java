@@ -3,22 +3,22 @@ package br.codepressionbrazil.OOMoney.controller;
 import br.codepressionbrazil.OOMoney.dto.PessoaDTO;
 import br.codepressionbrazil.OOMoney.model.entities.Pessoa;
 import br.codepressionbrazil.OOMoney.model.service.PessoaService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
-@Controller
-@RequestMapping("/oomoney/pessoas")
+
+@RestController
+@RequestMapping("/oomoney/pessoa")
 public class PessoaController {
 
+    @Autowired
     private PessoaService pessoaService;
 
     @GetMapping
@@ -48,12 +48,23 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
     }
 
-//    public ResponseEntity<Pessoa> edit() {
-//        return ResponseEntity.status(HttpStatus.OK).body();
-//    }
+    @PutMapping("/{cpf}")
+    public ResponseEntity<Object> edit(@PathVariable(name = "cpf") String cpf, @RequestBody @Valid PessoaDTO pessoaDTO) {
+        if (!pessoaService.existsById(cpf)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Este CPF não existe!");
+        }
+        Pessoa pessoa = new Pessoa();
+        BeanUtils.copyProperties(pessoaDTO, pessoa);
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
+    }
 
 
-    public void deleteById(String s) {
-        pessoaService.deleteById(s);
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<Object> deleteById(@PathVariable(name = "cpf") String cpf) {
+        if (!pessoaService.existsById(cpf)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma pessoa com este CPF!");
+        }
+        pessoaService.deleteById(cpf);
+        return ResponseEntity.status(HttpStatus.OK).body("Pessoa deletada com sucesso!");
     }
 }
