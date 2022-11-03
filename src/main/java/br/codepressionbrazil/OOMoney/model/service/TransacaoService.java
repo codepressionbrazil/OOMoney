@@ -1,5 +1,6 @@
 package br.codepressionbrazil.OOMoney.model.service;
 
+import br.codepressionbrazil.OOMoney.model.entities.Pessoa;
 import br.codepressionbrazil.OOMoney.model.entities.Transacao;
 import br.codepressionbrazil.OOMoney.repository.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class TransacaoService {
 
     public Optional<Transacao> findById(Integer integer) {
         return transacaoRepository.findById(integer);
+    }
+
+    public List<Transacao> findByPessoa(Pessoa pessoa) {
+        return transacaoRepository.findByPessoa(pessoa);
     }
 
     public boolean existsById(Integer integer) {

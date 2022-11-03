@@ -1,6 +1,7 @@
 package br.codepressionbrazil.OOMoney.controller;
 
 import br.codepressionbrazil.OOMoney.dto.TransacaoDTO;
+import br.codepressionbrazil.OOMoney.model.entities.Pessoa;
 import br.codepressionbrazil.OOMoney.model.entities.Transacao;
 import br.codepressionbrazil.OOMoney.model.service.TransacaoService;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +34,11 @@ public class TransacaoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma transação com o ID informado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(transacaoService.findById(id));
+    }
+
+    @GetMapping("/pessoa/{pessoa}")
+    public ResponseEntity<Object> findByPessoa(@PathVariable(name = "pessoa") Pessoa pessoa) {
+        return ResponseEntity.status(HttpStatus.OK).body(transacaoService.findByPessoa(pessoa));
     }
 
     @PostMapping
