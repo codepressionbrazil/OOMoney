@@ -38,7 +38,9 @@ public class TransacaoController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid TransacaoDTO transacaoDTO) {
         Transacao transacao = new Transacao();
+        System.out.println(transacaoDTO.toString());
         BeanUtils.copyProperties(transacaoDTO, transacao);
+        System.out.println(transacao.toString());
         return ResponseEntity.status(HttpStatus.OK).body(transacaoService.save(transacao));
     }
 

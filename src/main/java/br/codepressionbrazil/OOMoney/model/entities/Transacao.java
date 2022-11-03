@@ -1,13 +1,15 @@
 package br.codepressionbrazil.OOMoney.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
 @Table(name = "transacoes")
-
+@ToString
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,8 +26,9 @@ public class Transacao {
     @Column
     private String descricao;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
-    private Date dataHora;
+    private Timestamp dataHora;
 
     @Column(nullable = false)
     private Double valorTransacao;
@@ -35,8 +38,8 @@ public class Transacao {
     private TipoTransacao tipoTransacao;
 
     @ManyToOne
-    @JoinColumn(name = "idConta", nullable = false)
-    private Conta idConta;
+    @JoinColumn
+    private Pessoa pessoa;
 
     @ManyToOne
     @JoinColumn(name = "idClassificacao")

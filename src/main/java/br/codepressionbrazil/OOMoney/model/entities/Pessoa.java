@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Table(name = "pessoas")
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
