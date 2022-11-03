@@ -9,10 +9,8 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 public class ClassificacaoDTO {
-    @NonNull
-    private Long idClassificacao;
+
     @NotBlank
     private String nomeClassificao;
-    @NonNull
-    private Conta idConta;
+
 }

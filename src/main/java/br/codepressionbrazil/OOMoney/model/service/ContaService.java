@@ -26,4 +26,12 @@ public class ContaService {
     public <S extends Conta> S save(S entity) {
         return contaRepository.save(entity);
     }
+
+    public boolean existsById(Long aLong) {
+        return contaRepository.existsById(aLong);
+    }
+
+    public void deleteById(Long aLong) {
+        contaRepository.deleteById(aLong);
+    }
 }

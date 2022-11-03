@@ -11,8 +11,5 @@ import lombok.NonNull;
 @Getter
 public class ContaDTO {
     @NonNull
-    private Long idConta;
-
-    @NonNull
     private Pessoa pessoa_cpf;
 }

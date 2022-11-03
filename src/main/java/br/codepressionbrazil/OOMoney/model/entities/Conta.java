@@ -9,17 +9,21 @@ import java.util.List;
 @Table(name = "contas")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter @EqualsAndHashCode
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Conta {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true)
     private Long idConta;
 
     @Column
     private Double saldo = 0.0;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "cpfPessoa")
     private Pessoa pessoa;
 
     @OneToMany
