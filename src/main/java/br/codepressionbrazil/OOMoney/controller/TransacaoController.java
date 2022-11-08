@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @Controller
 @RequestMapping("/oomoney/transacao")
 public class TransacaoController {

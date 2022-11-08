@@ -14,13 +14,14 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/oomoney/pessoa")
 public class PessoaController {
 
     @Autowired
     private PessoaService pessoaService;
+
 
     @GetMapping
     public ResponseEntity<List<Pessoa>> findAll() {
