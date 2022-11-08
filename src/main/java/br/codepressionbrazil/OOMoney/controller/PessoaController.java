@@ -1,6 +1,7 @@
 package br.codepressionbrazil.OOMoney.controller;
 
 import br.codepressionbrazil.OOMoney.dto.PessoaDTO;
+import br.codepressionbrazil.OOMoney.dto.PessoaDTOLogin;
 import br.codepressionbrazil.OOMoney.model.entities.Pessoa;
 import br.codepressionbrazil.OOMoney.model.service.PessoaService;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +34,14 @@ public class PessoaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe nenhuma pessoa com este CPF!");
         }
         return ResponseEntity.status(HttpStatus.OK).body(pessoa.get());
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody @Valid PessoaDTOLogin pessoaDTOLogin) {
+        if (pessoaService.existsByEmail(pessoaDTOLogin.getEmail()) && pessoaService.existsBySenha(pessoaDTOLogin.getSenha())) {
+            return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findByEmail(pessoaDTOLogin.getEmail()));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe nenhuma pessoa com este Email ou senha!");
     }
 
     @PostMapping

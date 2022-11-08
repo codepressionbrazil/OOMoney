@@ -38,6 +38,10 @@ public class PessoaService {
         return pessoaRepository.existsByEmail(email);
     }
 
+    public Boolean existsBySenha(String senha) {
+        return pessoaRepository.existsBySenha(senha);
+    }
+
     public void deleteById(String s) {
         pessoaRepository.deleteById(s);
     }
