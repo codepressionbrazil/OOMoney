@@ -36,7 +36,7 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoa.get());
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid PessoaDTOLogin pessoaDTOLogin) {
         if (pessoaService.existsByEmail(pessoaDTOLogin.getEmail()) && pessoaService.existsBySenha(pessoaDTOLogin.getSenha())) {
             return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findByEmail(pessoaDTOLogin.getEmail()));
